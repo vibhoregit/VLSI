@@ -1,0 +1,27 @@
+nmos characteristic
+
+.include t14y_tsmc_025_level3.txt
+
+vgs gate 0 dc 3v
+vds drain 0 dc 5v
+
+m1 drain gate 0 0 CMOSN l=5e-6 w=10e-6
+
+.dc vgs 0 3.3 0.1 vds 0 3.3 1
+.dc vds 0 3.3 0.1 vgs 0 3.3 1
+
+.control
+foreach width 0.125u 0.25u 1u 2.5u  
+alter m1 w = $width
+run
+end
+foreach iter 1 2 3 4 5 6 7 8
+setplot dc$iter
+plot -vds#branch
+end
+
+.endc
+
+.end
+
+
