@@ -1,0 +1,26 @@
+Power consumed by mos inverter with passive resistive load varying resistance
+
+.include t14y_tsmc_025_level3.txt
+
+vin gate 0 pulse(0 5 20ns 2ns 2ns 20ns 150ns)
+
+vdd n1 0  dc 5v
+R1 drain n1 10k
+
+m1 drain gate 0 0 CMOSN l=5e-6 w=10e-6
+
+.TRAN 0ns 60ns 1ps
+
+.control
+foreach res 1k 3.3k 10k 22k 47k
+alter R1 = $res
+run
+end
+foreach iter 1 2 3 4 5
+setplot tran$iter
+plot (n1 * (-vdd#branch))
+
+end
+.endc
+
+.end

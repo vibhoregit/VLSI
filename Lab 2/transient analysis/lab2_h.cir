@@ -1,0 +1,27 @@
+falltime risetime propagation delay of mos inverter with passive width
+.include t14y_tsmc_025_level3.txt
+
+vin gate 0 pulse(0 5 20ns 2ps 2ps 20ns 150ns)
+
+vdd n1 0  dc 5v
+R1 drain n1 10k
+
+m1 drain gate 0 0 CMOSN l=5e-6 w=10e-6
+
+c1 drain 0 1pf
+
+.TRAN 0ns 100ns 1ps
+
+.control
+foreach width 0.25u 1u 10u 25u 50u
+alter m1 w = $width
+run
+end
+foreach iter 1 2 3 4 5
+setplot tran$iter
+plot drain gate
+
+end
+.endc
+
+.end

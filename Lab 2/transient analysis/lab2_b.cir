@@ -1,0 +1,25 @@
+Transfer function of mos inverter with passive resistive load
+
+.include t14y_tsmc_025_level3.txt
+
+vin gate 0 pulse(0 5 20ns 2ns 2ns 20ns 150ns)
+
+vdd 1 0  dc 5v
+R1 drain 1 10k
+
+m1 drain gate 0 0 CMOSN l=5e-6 w=10e-6
+
+.TRAN 0ns 60ns 0.01ns
+
+.control
+foreach width 0.25u 1u 5u 15u 30u
+alter m1 w = $width
+run
+end
+foreach iter 1 2 3 4 5
+setplot tran$iter
+plot drain gate
+end
+.endc
+
+.end

@@ -1,0 +1,19 @@
+Transfer function of mos inverter with passive resistive load varrying resistance
+
+.include t14y_tsmc_025_level3.txt
+
+vin gate 0 5v
+
+vdd 1 0  dc 5v
+R1 drain 1 10k
+
+m1 drain gate 0 0 CMOSN l=5e-6 w=10e-6
+
+.dc vin 0 5 0.1 R1 1k 100k 20k
+
+.control
+run
+plot drain
+.endc
+
+.end
